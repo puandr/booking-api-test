@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class DeleteBookingTest {
+class DeleteBookingTest extends BaseTest{
 
     @Test
     @Description("Verify that providing a valid token and a correct booking ID yields HTTP 200/201 and confirms the booking is removed")
@@ -25,7 +25,7 @@ class DeleteBookingTest {
         Response createResponse = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(createBookingPayload)
-                .post("https://restful-booker.herokuapp.com/booking");
+                .post("/booking");
 
         int createStatus = createResponse.getStatusCode();
         assertTrue(createStatus == 200 || createStatus == 201, "Booking creation failed with status code " + createStatus);
@@ -37,7 +37,7 @@ class DeleteBookingTest {
         Response authResponse = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(authPayload)
-                .post("https://restful-booker.herokuapp.com/auth");
+                .post("/auth");
         assertEquals(200, authResponse.getStatusCode(), "Auth token request failed");
         String token = authResponse.jsonPath().getString("token");
         assertNotNull(token, "Token should not be null");
@@ -45,7 +45,7 @@ class DeleteBookingTest {
         Response deleteResponse = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Cookie", "token=" + token)
-                .delete("https://restful-booker.herokuapp.com/booking/" + bookingId);
+                .delete("/booking/" + bookingId);
 
         int deleteStatus = deleteResponse.getStatusCode();
         assertTrue(deleteStatus == 200 || deleteStatus == 201,
@@ -53,7 +53,7 @@ class DeleteBookingTest {
 
         Response getDeletedResponse = RestAssured.given()
                 .header("Accept", "application/json")
-                .get("https://restful-booker.herokuapp.com/booking/" + bookingId);
+                .get("/booking/" + bookingId);
 
         assertEquals(404, getDeletedResponse.getStatusCode(),
                 "Expected GET on deleted booking to return 404, but got " + getDeletedResponse.getStatusCode());

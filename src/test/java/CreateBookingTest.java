@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CreateBookingTest {
+class CreateBookingTest extends BaseTest{
 
     @Test
     @Description("Verify that using valid JSON with all mandatory fields returns HTTP 200 OK (or 201) and the created booking data")
@@ -25,7 +25,7 @@ class CreateBookingTest {
         Response response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(requestBody)
-                .post("https://restful-booker.herokuapp.com/booking");
+                .post("/booking");
 
         int statusCode = response.getStatusCode();
         assertTrue(statusCode == 200 || statusCode == 201,

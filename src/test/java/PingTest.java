@@ -4,12 +4,12 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PingTest {
+class PingTest extends BaseTest {
 
     @Test
     @Description("Verify that sending a GET request to /ping returns HTTP 200 OK or 201 Created indicating the API is up")
     void testPingEndpoint() {
-        Response response = RestAssured.get("https://restful-booker.herokuapp.com/ping");
+        Response response = RestAssured.get("/ping");
 
         int statusCode = response.getStatusCode();
         assertTrue(statusCode == 200 || statusCode == 201,

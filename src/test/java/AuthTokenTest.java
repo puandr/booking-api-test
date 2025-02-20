@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AuthTokenTest {
+class AuthTokenTest extends BaseTest {
 
     @Test
     @Description("Verify that providing valid credentials returns a valid auth token")
@@ -15,7 +15,7 @@ class AuthTokenTest {
         Response response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(requestBody)
-                .post("https://restful-booker.herokuapp.com/auth");
+                .post("/auth");
 
         assertEquals(200, response.getStatusCode(), "Expected HTTP status code 200");
 

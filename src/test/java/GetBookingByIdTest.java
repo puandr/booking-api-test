@@ -4,7 +4,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class GetBookingByIdTest {
+class GetBookingByIdTest extends BaseTest{
 
     @Test
     @Description("Verify that requesting an existing booking ID returns HTTP 200 OK and contains booking details with valid values")
@@ -13,7 +13,7 @@ class GetBookingByIdTest {
 
         Response response = RestAssured.given()
                 .header("Accept", "application/json")
-                .get("https://restful-booker.herokuapp.com/booking/" + bookingId);
+                .get("/booking/" + bookingId);
 
         assertEquals(200, response.getStatusCode(), "Expected HTTP status code 200");
 

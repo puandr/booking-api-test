@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class UpdateBookingTest {
+class UpdateBookingTest extends BaseTest{
 
     @Test
     @Description("Verify that providing a valid token and updated fields returns HTTP 200 OK and an updated booking object")
@@ -14,7 +14,7 @@ class UpdateBookingTest {
         Response authResponse = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(authPayload)
-                .post("https://restful-booker.herokuapp.com/auth");
+                .post("/auth");
         assertEquals(200, authResponse.getStatusCode(), "Auth token request failed");
         String token = authResponse.jsonPath().getString("token");
         assertNotNull(token, "Token should not be null");
@@ -37,7 +37,7 @@ class UpdateBookingTest {
                 .contentType(ContentType.JSON)
                 .header("Cookie", "token=" + token)
                 .body(updatePayload)
-                .put("https://restful-booker.herokuapp.com/booking/" + bookingId);
+                .put("/booking/" + bookingId);
 
         assertEquals(200, updateResponse.getStatusCode(), "Expected HTTP status code 200");
 
